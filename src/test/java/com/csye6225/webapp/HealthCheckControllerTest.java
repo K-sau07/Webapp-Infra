@@ -1,13 +1,16 @@
 package com.csye6225.webapp;
 
 import com.csye6225.webapp.repository.HealthCheckRepository;
+import com.csye6225.webapp.service.S3Service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.web.servlet.MockMvc;
+import software.amazon.awssdk.services.s3.S3Client;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
@@ -24,6 +27,10 @@ class HealthCheckControllerTest {
 
     @SpyBean
     private HealthCheckRepository healthCheckRepository;
+
+    // Mock S3Client so Spring context loads without AWS credentials
+    @MockBean
+    private S3Client s3Client;
 
     @BeforeEach
     void setUp() {
